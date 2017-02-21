@@ -69,9 +69,9 @@ VectorOfVector<int> SAT(const VectorOfVector<T>& input)
 		for (int j = 0; j < row.size(); ++j)
 		{
 			int ele = get(input, i, j)
-				+ get(input, i - 1, j)
-				+ get(input, i, j - 1)
-				- get(input, i - 1, j - 1);
+				+ get( result, i - 1, j)
+				+ get( result, i, j - 1)
+				- get( result, i - 1, j - 1);
 
 			row[j] = ele;
 		}
