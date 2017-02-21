@@ -99,9 +99,9 @@ struct Pizza
 		auto sat = SAT<C>(ingradient_table(type));
 
 		C counts = get(sat, slice.br.y, slice.br.x)
-			+ get(sat, slice.tl.y, slice.tl.x)
-			- get(sat, slice.tl.y, slice.br.x)
-			- get(sat, slice.br.y, slice.tl.x);
+			+ get(sat, slice.tl.y - 1, slice.tl.x - 1)
+			- get(sat, slice.tl.y - 1, slice.br.x)
+			- get(sat, slice.br.y, slice.tl.x - 1);
 
 		return counts;
 	}
