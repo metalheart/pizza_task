@@ -38,6 +38,8 @@ struct Pizza
 	size_t min_ingradients;
 	size_t max_cells;
 
+  size_t ingridien_count( IngradientType ) const;
+
 	std::vector<T> row(size_t row)
 	{
 		return data.at(row);
