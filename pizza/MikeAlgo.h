@@ -5,7 +5,7 @@ std::vector<Slice> get_by_simple_rects(const Pizza<IngradientType>& pizza, size_
 {
     std::vector<Slice> result;
     for(size_t i = 0; i < pizza.data[0].size(); i += w - 1)
-        for (size_t j = 0; j < pizza.data.size(); i += w - 1)
+        for (size_t j = 0; j < pizza.data.size(); j += w - 1)
         {
             Slice s(Point(i, j), Point(i + w, j + h));
             size_t tmcnt = pizza.ingridient_count(IngradientType::Tomato, s);
