@@ -24,7 +24,7 @@ IngradientType convert(char c)
 template <class T>
 using VectorOfVector = std::vector<std::vector<T>>;
 
-template <class T, class C = unsigned char>
+template <class T, class C = unsigned int>
 struct Pizza
 {
 	void allocate(size_t row, size_t col)
@@ -38,7 +38,7 @@ struct Pizza
 	size_t min_ingradients;
 	size_t max_cells;
 
-  size_t ingridient_count( IngradientType ) const;
+	size_t ingridient_count( IngradientType ) const;
 
 	std::vector<T> row(size_t row)
 	{

@@ -1,4 +1,5 @@
 #include "Pizza.h"
+#include "MaxAlgo.h"
 
 #include <iostream>
 #include <fstream>
@@ -12,6 +13,8 @@ int main()
 	input >> pizza;
 
 	auto tomatos = pizza.ingradient_table(IngradientType::Tomato);
+
+	auto sat = SAT(tomatos);
 
 	return 0;
 }
