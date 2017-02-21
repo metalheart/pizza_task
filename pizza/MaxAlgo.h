@@ -12,10 +12,10 @@ T get(const VectorOfVector<T> v, int row, int col)
 	return v.at(row).at(col);
 }
 
-template <typename T>
-VectorOfVector<T> SAT(const VectorOfVector<T>& input)
+template <class T>
+VectorOfVector<int> SAT(const VectorOfVector<T>& input)
 {
-	VectorOfVector<T> result = input;
+	VectorOfVector<int> result(input.size(), std::vector<int>(input[0].size(), 0));
 
 	for (int i = 0; i < result.size(); ++i)
 	{
