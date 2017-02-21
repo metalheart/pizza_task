@@ -6,7 +6,7 @@
 void output_slices( const std::vector<Slice>& slices ) {
   std::cout << slices.size() << std::endl;
   for ( const auto& s : slices ) {
-    std::cout << s.tl.y << " " << s.tl.x << " " << s.br.y << " " << s.br.y << std::endl;
+    std::cout << s.tl.y << " " << s.tl.x << " " << s.br.y << " " << s.br.x << std::endl;
   }
 }
 
