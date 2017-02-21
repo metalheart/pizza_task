@@ -7,10 +7,11 @@ int main()
 {
 	using namespace std;
 	Pizza<IngradientType> pizza;
-	auto tomatos = pizza.ingradient_table(IngradientType::Tomato);
 
 	ifstream input("data.txt");
-
 	input >> pizza;
 
+	auto tomatos = pizza.ingradient_table(IngradientType::Tomato);
+
+	return 0;
 }
