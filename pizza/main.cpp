@@ -1,13 +1,15 @@
 #include "Pizza.h"
 #include "MaxAlgo.h"
+#include "MikeAlgo.h"
 
 #include <iostream>
 #include <fstream>
 
-void output_slices( const std::vector<Slice>& slices ) {
-  std::cout << slices.size() << std::endl;
+
+void output_slices( std::ostream& os, const std::vector<Slice>& slices ) {
+  os << slices.size() << std::endl;
   for ( const auto& s : slices ) {
-    std::cout << s.tl.y << " " << s.tl.x << " " << s.br.y << " " << s.br.x << std::endl;
+    os << s.tl.y << " " << s.tl.x << " " << s.br.y << " " << s.br.x << std::endl;
   }
 }
 
@@ -18,12 +20,6 @@ size_t slices_area( const std::vector<Slice>& slices )
     area += (s.br.x - s.tl.x + 1) * (s.br.y - s.tl.y + 1);
   }
   return area;
-}
-
-std::vector<Slice> get_by_simple_rects( const Pizza<IngradientType>& pizza, size_t w, size_t h )
-{
-  std::vector<Slice> result;
-  return result;
 }
 
 int main()
@@ -57,14 +53,16 @@ int main()
     {
       best_area = area;
       best_result = result;
+      std::cout << "New best area: " << best_area << std::endl;
     }
   }
-  output_slices( best_result );
 
 #else
-  std::vector<Slice> result = get_by_simple_rects( pizza, pizza.max_cells, 1 );
-  output_slices( result );
+  std::vector<Slice> best_result = get_by_simple_rects( pizza, pizza.max_cells, 1 );
 #endif
+  std::ofstream os( "best_result.txt" );
+  output_slices( os, best_result );
+
 
   auto c1 = pizza.ingridient_count(IngradientType::Tomato, Slice(Point(0, 0), Point(4, 2)));
 
