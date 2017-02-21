@@ -4,10 +4,10 @@
 #include <iostream>
 #include <fstream>
 
-void output_slices( const std::vector<Slice>& slices ) {
-  std::cout << slices.size() << std::endl;
+void output_slices( std::ostream& os, const std::vector<Slice>& slices ) {
+  os << slices.size() << std::endl;
   for ( const auto& s : slices ) {
-    std::cout << s.tl.y << " " << s.tl.x << " " << s.br.y << " " << s.br.x << std::endl;
+    os << s.tl.y << " " << s.tl.x << " " << s.br.y << " " << s.br.x << std::endl;
   }
 }
 
@@ -57,14 +57,16 @@ int main()
     {
       best_area = area;
       best_result = result;
+      std::cout << "New best area: " << best_area << std::endl;
     }
   }
-  output_slices( best_result );
 
 #else
-  std::vector<Slice> result = get_by_simple_rects( pizza, pizza.max_cells, 1 );
-  output_slices( result );
+  std::vector<Slice> best_result = get_by_simple_rects( pizza, pizza.max_cells, 1 );
 #endif
+  std::ofstream os( "best_result.txt" );
+  output_slices( os, best_result );
+
 
 	auto sat = SAT(tomatos);
 
