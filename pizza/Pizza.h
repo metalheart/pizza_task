@@ -24,6 +24,28 @@ IngradientType convert(char c)
 template <class T>
 using VectorOfVector = std::vector<std::vector<T>>;
 
+struct Point
+{
+  Point( int x, int y )
+    : x( x )
+    , y( y ) {
+  }
+
+  int x;
+  int y;
+};
+
+struct Slice
+{
+  Slice( const Point& tl, const Point& br )
+    : tl( tl )
+    , br( br ) {
+  }
+
+  Point tl;
+  Point br;
+};
+
 template <class T, class C = unsigned char>
 struct Pizza
 {
@@ -38,7 +60,7 @@ struct Pizza
 	size_t min_ingradients;
 	size_t max_cells;
 
-  size_t ingridient_count( IngradientType ) const;
+  size_t ingridient_count( IngradientType, const Slice& slice ) const;
 
 	std::vector<T> row(size_t row)
 	{
