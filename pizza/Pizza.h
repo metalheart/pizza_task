@@ -86,17 +86,17 @@ struct Pizza
 
 		for (const auto& row : data)
 		{
-			std::vector<C> col;
-			col.reserve(row.size());
+			std::vector<C> rrow;
+			rrow.reserve(row.size());
 
 			std::for_each(row.begin(), row.end(), 
-				[&col,&type](const T& t)
+				[&rrow,&type](const T& t)
 				{
-					col.push_back(t == type ? 1 : 0);
+					rrow.push_back(t == type ? 1 : 0);
 				}
 			);
 
-			result.push_back(std::move(col));
+			result.push_back(std::move(rrow));
 		}
 
 		return result;
