@@ -66,7 +66,7 @@ int main()
   output_slices( result );
 #endif
 
-	auto sat = SAT(tomatos);
+  auto c1 = pizza.ingridient_count(IngradientType::Tomato, Slice(Point(0, 0), Point(4, 2)));
 
 	return 0;
 }

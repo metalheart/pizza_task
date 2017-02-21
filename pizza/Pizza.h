@@ -46,6 +46,40 @@ struct Slice
   Point br;
 };
 
+template <typename T>
+T get(const VectorOfVector<T> v, int row, int col)
+{
+	if (row < 0 || col < 0)
+	{
+		return 0;
+	}
+
+	return v.at(row).at(col);
+}
+
+template <typename T>
+VectorOfVector<T> SAT(const VectorOfVector<T>& input)
+{
+	VectorOfVector<T> result = input;
+
+	for (int i = 0; i < result.size(); ++i)
+	{
+		auto& row = result.at(i);
+
+		for (int j = 0; j < row.size(); ++j)
+		{
+			T ele = get(result, i, j)
+				+ get(result, i - 1, j)
+				+ get(result, i, j - 1)
+				- get(result, i - 1, j - 1);
+
+			row[j] = ele;
+		}
+	}
+
+	return result;
+}
+
 template <class T, class C = unsigned char>
 struct Pizza
 {
@@ -60,7 +94,17 @@ struct Pizza
 	size_t min_ingradients;
 	size_t max_cells;
 
-  size_t ingridient_count( IngradientType, const Slice& slice ) const;
+	C ingridient_count(IngradientType type, const Slice& slice) const
+	{
+		auto sat = SAT<C>(ingradient_table(type));
+
+		C counts = get(sat, slice.br.y, slice.br.x)
+			+ get(sat, slice.tl.y, slice.tl.x)
+			- get(sat, slice.tl.y, slice.br.x)
+			- get(sat, slice.br.y, slice.tl.x);
+
+		return counts;
+	}
 
 	std::vector<T> row(size_t row)
 	{
@@ -79,7 +123,7 @@ struct Pizza
 		return result;
 	}
 
-	VectorOfVector<C> ingradient_table(const T& type)
+	VectorOfVector<C> ingradient_table(const T& type) const
 	{
 		VectorOfVector<C> result;
 		result.reserve(data.size());
