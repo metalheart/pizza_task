@@ -1,14 +1,17 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <iostream>
 
 enum class IngradientType
 {
-	None = 0,
-	Tomato,
-	Mashroom
+	Tomato = 0,
+	Mashroom,
+	NumIngradients,
+
+	None
 };
 
 IngradientType convert(char c)
@@ -58,9 +61,9 @@ T get(const VectorOfVector<T>& v, int row, int col)
 }
 
 template <typename T>
-VectorOfVector<int> SAT(const VectorOfVector<T>& input)
+VectorOfVector<T> SAT(const VectorOfVector<T>& input)
 {
-	VectorOfVector<int> result(input.size(), std::vector<int>(input[0].size(), 0));
+	VectorOfVector<T> result = input;
 
 	for (int i = 0; i < result.size(); ++i)
 	{
@@ -68,7 +71,7 @@ VectorOfVector<int> SAT(const VectorOfVector<T>& input)
 
 		for (int j = 0; j < row.size(); ++j)
 		{
-			int ele = get(input, i, j)
+			T ele = get(input, i, j)
 				+ get( result, i - 1, j)
 				+ get( result, i, j - 1)
 				- get( result, i - 1, j - 1);
@@ -80,7 +83,7 @@ VectorOfVector<int> SAT(const VectorOfVector<T>& input)
 	return result;
 }
 
-template <class T, class C = unsigned char>
+template <class T, class C = unsigned int>
 struct Pizza
 {
 	void allocate(size_t row, size_t col)
@@ -89,14 +92,25 @@ struct Pizza
 		std::for_each(data.begin(), data.end(), [&col](std::vector<T>& row) {row.resize(col);});
 	}
 
+	void calculate()
+	{
+
+		auto a1 = SAT<C>(ingradient_table(IngradientType::Tomato));
+		auto a2 = SAT<C>(ingradient_table(IngradientType::Mashroom));
+
+		sats[static_cast<int>(IngradientType::Tomato)] = std::move(a1);
+		sats[static_cast<int>(IngradientType::Mashroom)] = std::move(a2);
+	}
+
 	// row x column
 	VectorOfVector<T> data;
+	VectorOfVector<C> sats[static_cast<int>(IngradientType::NumIngradients)];
 	size_t min_ingradients;
 	size_t max_cells;
 
 	C ingridient_count(IngradientType type, const Slice& slice) const
 	{
-		auto sat = SAT<C>(ingradient_table(type));
+		auto sat = sats[static_cast<int>(type)];
 
 		C counts = get(sat, slice.br.y, slice.br.x)
 			+ get(sat, slice.tl.y - 1, slice.tl.x - 1)
@@ -176,6 +190,8 @@ std::istream& operator >> (std::istream& stream, Pizza<T,C>& pizza)
 
 		pizza.data.push_back(std::move(row));
 	}
+
+	pizza.calculate();
 
 	return stream;
 }
