@@ -1,8 +1,10 @@
 #include "Pizza.h"
 #include "MaxAlgo.h"
+#include "MikeAlgo.h"
 
 #include <iostream>
 #include <fstream>
+
 
 void output_slices( std::ostream& os, const std::vector<Slice>& slices ) {
   os << slices.size() << std::endl;
@@ -18,12 +20,6 @@ size_t slices_area( const std::vector<Slice>& slices )
     area += (s.br.x - s.tl.x + 1) * (s.br.y - s.tl.y + 1);
   }
   return area;
-}
-
-std::vector<Slice> get_by_simple_rects( const Pizza<IngradientType>& pizza, size_t w, size_t h )
-{
-  std::vector<Slice> result;
-  return result;
 }
 
 int main()
