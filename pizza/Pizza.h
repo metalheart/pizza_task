@@ -47,7 +47,7 @@ struct Slice
 };
 
 template <typename T>
-T get(const VectorOfVector<T> v, int row, int col)
+T get(const VectorOfVector<T>& v, int row, int col)
 {
 	if (row < 0 || col < 0)
 	{
@@ -68,10 +68,10 @@ VectorOfVector<int> SAT(const VectorOfVector<T>& input)
 
 		for (int j = 0; j < row.size(); ++j)
 		{
-			T ele = get(result, i, j)
-				+ get(result, i - 1, j)
-				+ get(result, i, j - 1)
-				- get(result, i - 1, j - 1);
+			int ele = get(input, i, j)
+				+ get(input, i - 1, j)
+				+ get(input, i, j - 1)
+				- get(input, i - 1, j - 1);
 
 			row[j] = ele;
 		}
