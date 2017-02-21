@@ -10,7 +10,7 @@ void output_slices( const std::vector<Slice>& slices ) {
   }
 }
 
-std::vector<Slice> get_by_simple_rects( const Pizza<IngradientType>& pizza, int w, int h ) 
+std::vector<Slice> get_by_simple_rects( const Pizza<IngradientType>& pizza, size_t w, size_t h )
 {
   std::vector<Slice> result;
   return result;
@@ -25,6 +25,8 @@ int main()
 	input >> pizza;
 
 	auto tomatos = pizza.ingradient_table(IngradientType::Tomato);
+  std::vector<Slice> result = get_by_simple_rects( pizza, pizza.max_cells, 1 );
+  output_slices( result );
 
 	return 0;
 }
