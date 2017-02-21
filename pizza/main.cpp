@@ -4,6 +4,28 @@
 #include <iostream>
 #include <fstream>
 
+void output_slices( const std::vector<Slice>& slices ) {
+  std::cout << slices.size() << std::endl;
+  for ( const auto& s : slices ) {
+    std::cout << s.tl.y << " " << s.tl.x << " " << s.br.y << " " << s.br.x << std::endl;
+  }
+}
+
+size_t slices_area( const std::vector<Slice>& slices ) 
+{
+  size_t area = 0;
+  for ( const auto& s : slices ) {
+    area += (s.br.x - s.tl.x + 1) * (s.br.y - s.tl.y + 1);
+  }
+  return area;
+}
+
+std::vector<Slice> get_by_simple_rects( const Pizza<IngradientType>& pizza, size_t w, size_t h )
+{
+  std::vector<Slice> result;
+  return result;
+}
+
 int main()
 {
 	using namespace std;
@@ -13,6 +35,36 @@ int main()
 	input >> pizza;
 
 	auto tomatos = pizza.ingradient_table(IngradientType::Tomato);
+  std::vector<std::pair<int, int>> sizes;
+  for ( int w = 1; w < pizza.max_cells; ++w ) 
+  {
+    for ( int h = 1; h < pizza.max_cells / w; ++h ) 
+    {
+      if ( w * h <= pizza.max_cells && w * h >= pizza.min_ingradients * 2 ) 
+      {
+        sizes.emplace_back( w, h );
+      }
+    }
+  }
+#if 10
+  std::vector<Slice> best_result;
+  size_t best_area = 0;
+  for ( auto size : sizes ) 
+  {
+    auto result = get_by_simple_rects( pizza, size.first, size.second );
+    size_t area = slices_area( result );
+    if ( area > best_area ) 
+    {
+      best_area = area;
+      best_result = result;
+    }
+  }
+  output_slices( best_result );
+
+#else
+  std::vector<Slice> result = get_by_simple_rects( pizza, pizza.max_cells, 1 );
+  output_slices( result );
+#endif
 
 	auto sat = SAT(tomatos);
 
