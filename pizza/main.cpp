@@ -42,6 +42,7 @@ int main()
       }
     }
   }
+  auto c1 = pizza.ingridient_count( IngradientType::Tomato, Slice( Point( 0, 0 ), Point( 4, 2 ) ) );
 #if 10
   std::vector<Slice> best_result;
   size_t best_area = 0;
@@ -64,7 +65,6 @@ int main()
   output_slices( os, best_result );
 
 
-  auto c1 = pizza.ingridient_count(IngradientType::Tomato, Slice(Point(0, 0), Point(4, 2)));
 
 	return 0;
 }
