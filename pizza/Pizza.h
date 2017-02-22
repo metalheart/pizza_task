@@ -110,7 +110,7 @@ struct Pizza
 
 	C ingridient_count(IngradientType type, const Slice& slice) const
 	{
-		auto sat = sats[static_cast<int>(type)];
+		const auto& sat = sats[static_cast<int>(type)];
 
 		C counts = get(sat, slice.br.y, slice.br.x)
 			+ get(sat, slice.tl.y - 1, slice.tl.x - 1)
